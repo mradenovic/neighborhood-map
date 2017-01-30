@@ -3,6 +3,7 @@ var require = {
     baseUrl: ".",
     paths: {
         "bootstrap":            "bower_modules/components-bootstrap/js/bootstrap.min",
+        "bootstrap-sidebar":    "bower_modules/bootstrap-sidebar/dist/js/sidebar",
         "crossroads":           "bower_modules/crossroads/dist/crossroads.min",
         "hasher":               "bower_modules/hasher/dist/js/hasher.min",
         "jquery":               "bower_modules/jquery/dist/jquery",
@@ -12,6 +13,7 @@ var require = {
         "text":                 "bower_modules/requirejs-text/text"
     },
     shim: {
+        "bootstrap-sidebar": { deps: ["jquery"] },
         "bootstrap": { deps: ["jquery"] }
     }
 };

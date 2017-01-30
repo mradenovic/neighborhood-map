@@ -1,5 +1,6 @@
 import 'jquery';
 import 'bootstrap';
+import 'bootstrap-sidebar';
 import ko from 'knockout';
 import 'knockout-projections'
 import * as router from './router';
