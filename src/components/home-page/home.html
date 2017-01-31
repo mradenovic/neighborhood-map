@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row full-height">
   <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
     <ul class="nav navbar-stacked navbar-inverse">
       <li class="active">
@@ -13,11 +13,17 @@
     </ul>
   </div>
 
-  <div class="main col-md-9 col-md-offset-3">
+  <div class="main col-md-9 col-md-offset-3 full-height">
     <h2>Home</h2>
 
     <p data-bind='text: message'></p>
 
     <button data-bind='click: doSomething'>Click me</button>
+
+    <div class="panel panel-default full-height">
+      <div class="panel-body full-height">
+        <div id="google-map"></div>
+      </div>
+    </div>
   </div>
 </div>

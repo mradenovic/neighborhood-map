@@ -1,3 +1,15 @@
 #page {
 	margin-top: 80px;
 }
+
+html {
+	height: 100%;
+}
+
+body {
+	height: calc(100% - 80px);
+}
+
+#page, #google-map, .full-height {
+	height: 100%;
+}
