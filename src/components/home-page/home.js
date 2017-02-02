@@ -5,6 +5,7 @@ import homeTemplate from 'text!./home.html';
 class HomeViewModel {
     constructor(route) {
         this.filter = ko.observableArray(['all']);
+        this.places = ko.observableArray();
         this.loadGoogleMapsAPI();
     }
 
@@ -39,6 +40,7 @@ class HomeViewModel {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
           this.updateFilter(results[i]);
+          this.updatePlaces(results[i]);
           this.createMarker(results[i]);
         }
       }
@@ -49,6 +51,10 @@ class HomeViewModel {
       if (this.filter.indexOf(type) == -1) {
         this.filter.push(type);
       }
+    }
+
+    updatePlaces(place) {
+      this.places.push(place);
     }
 
     createMarker(place) {

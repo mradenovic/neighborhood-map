@@ -1,14 +1,11 @@
 <div class="row full-height">
   <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
-    <ul class="nav navbar-stacked navbar-inverse">
-      <li class="active">
-        <a href="#">Place 1</a>
-      </li>
+    <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: places">
       <li>
-        <a href="#">Place 2</a>
-      </li>
-      <li>
-        <a href="#">Place 3</a>
+        <a href="#">
+          <div data-bind="text: name"></div>
+          <small data-bind="text: vicinity"></small>
+        </a>
       </li>
     </ul>
   </div>
