@@ -4,7 +4,6 @@ import homeTemplate from 'text!./home.html';
 
 class HomeViewModel {
     constructor(route) {
-        this.message = ko.observable('Welcome to Neighborhood Map!');
         this.filter = ko.observableArray(['all']);
         this.loadGoogleMapsAPI();
     }
@@ -72,11 +71,6 @@ class HomeViewModel {
         this.infowindow.setContent(place.name);
         this.infowindow.open(this.map, marker);
       });
-    }
-
-
-    doSomething() {
-        this.message('You invoked doSomething() on the viewmodel.');
     }
 }
 
