@@ -5,6 +5,7 @@ import homeTemplate from 'text!./home.html';
 class HomeViewModel {
     constructor(route) {
         this.message = ko.observable('Welcome to Neighborhood Map!');
+        this.filter = ko.observableArray(['all']);
         this.loadGoogleMapsAPI();
     }
 
@@ -38,8 +39,16 @@ class HomeViewModel {
     callback(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (let i = 0; i < results.length; i++) {
+          this.updateFilter(results[i]);
           this.createMarker(results[i]);
         }
+      }
+    }
+
+    updateFilter (place) {
+      let type = place.types[0];
+      if (this.filter.indexOf(type) == -1) {
+        this.filter.push(type);
       }
     }
 
