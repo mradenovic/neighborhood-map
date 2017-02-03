@@ -3,7 +3,11 @@ import GoogleMapsLoader from 'google-maps';
 import homeTemplate from 'text!./home.html';
 
 class HomeViewModel {
+    // let self = this;
+
     constructor(route) {
+
+        this.markers = [];
         this.filter = ko.observableArray(['all']);
         this.places = ko.observableArray();
         this.loadGoogleMapsAPI();
@@ -73,10 +77,19 @@ class HomeViewModel {
         position: place.geometry.location
       });
 
-      google.maps.event.addListener(marker, 'click', () => {
-        this.infowindow.setContent(place.name);
-        this.infowindow.open(this.map, marker);
+      google.maps.event.addListener(marker, 'click', (e) => {
+        let i = this.markers.indexOf(marker);
+        this.locationClick(this.places()[i], e);
       });
+
+      this.markers.push(marker);
+    }
+
+    locationClick(place, e) {
+      let i = this.places().indexOf(place);
+
+      this.infowindow.setContent(place.name);
+      this.infowindow.open(this.map, this.markers[i]);
     }
 }
 
