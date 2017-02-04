@@ -1,7 +1,7 @@
 <div class="row full-height">
   <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
     <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: places">
-      <li data-toggle="sidebar" data-target=".sidebar-left" data-bind="click: function (place, event) {$parent.locationClick(place, event)}">
+      <li data-toggle="sidebar" data-target=".sidebar-left" data-bind="visible: $parent.placeIsVisible($data), click: function (place, event) {$parent.locationClick(place, event)}">
         <a href="#">
           <div data-bind="text: name"></div>
           <small data-bind="text: vicinity"></small>
@@ -13,7 +13,7 @@
   <div class="main col-md-9 col-md-offset-3 full-height">
     <div class="form-group">
       <label for="sel1">Select filter:</label>
-      <select class="form-control" data-bind="options: filter"></select>
+      <select class="form-control" data-bind="options: filterOptions, value: selectedFilter, click: filterChange"></select>
     </div>
     <div class="panel panel-default full-height">
       <div class="panel-body full-height">

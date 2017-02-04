@@ -8,7 +8,8 @@ class HomeViewModel {
     constructor(route) {
 
         this.markers = [];
-        this.filter = ko.observableArray(['all']);
+        this.filterOptions = ko.observableArray(['all']);
+        this.selectedFilter = ko.observable();
         this.places = ko.observableArray();
         this.loadGoogleMapsAPI();
     }
@@ -52,8 +53,8 @@ class HomeViewModel {
 
     updateFilter (place) {
       let type = place.types[0];
-      if (this.filter.indexOf(type) == -1) {
-        this.filter.push(type);
+      if (this.filterOptions.indexOf(type) == -1) {
+        this.filterOptions.push(type);
       }
     }
 
@@ -90,6 +91,22 @@ class HomeViewModel {
 
       this.infowindow.setContent(place.name);
       this.infowindow.open(this.map, this.markers[i]);
+    }
+
+    filterChange() {
+      let markers = this.markers;
+      let places = this.places();
+      for (var i = 0; i < markers.length; i++) {
+        let visible = this.placeIsVisible(places[i]);
+        let map = visible ? this.map : null;
+        markers[i].setMap(map);
+      }
+    }
+
+    placeIsVisible(place) {
+      let selectedFilter = this.selectedFilter();
+      let visible = (selectedFilter == place.types[0]) || (selectedFilter == 'all');
+      return visible;
     }
 }
 
