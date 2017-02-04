@@ -88,6 +88,10 @@ class HomeViewModel {
 
     locationClick(place, e) {
       let i = this.places().indexOf(place);
+      let marker = this.markers[i];
+      
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(() => {marker.setAnimation(null)}, 3550);
 
       this.infowindow.setContent(place.name);
       this.infowindow.open(this.map, this.markers[i]);
