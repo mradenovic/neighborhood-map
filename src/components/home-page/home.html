@@ -1,13 +1,15 @@
 <div class="row full-height">
   <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
-    <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: places">
-      <li data-toggle="sidebar" data-target=".sidebar-left" data-bind="visible: $parent.placeIsVisible($data), click: function (place, event) {$parent.locationClick(place, event)}">
-        <a href="#">
-          <div data-bind="text: name"></div>
-          <small data-bind="text: vicinity"></small>
-        </a>
-      </li>
-    </ul>
+    <div class="row">
+      <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: places">
+        <li data-toggle="sidebar" data-target=".sidebar-left" data-bind="visible: $parent.placeIsVisible($data), click: function (place, event) {$parent.locationClick(place, event)}">
+          <a href="#">
+            <div data-bind="text: name"></div>
+            <small data-bind="text: vicinity"></small>
+          </a>
+        </li>
+      </ul>
+  </div>
   </div>
 
   <div class="main col-md-9 col-md-offset-3 full-height">
