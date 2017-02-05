@@ -28,7 +28,7 @@ class HomeViewModel {
 
     let GOOGLE_MAP_OPTIONS = {
       center: sunnyside,
-      zoom: 15,
+      zoom: 14,
     };
 
     this.map = new google.maps.Map(document.getElementById('google-map'), GOOGLE_MAP_OPTIONS)
