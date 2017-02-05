@@ -15,7 +15,7 @@
   <div class="main col-md-9 col-md-offset-3 full-height">
     <div class="form-group">
       <label for="sel1">Select filter:</label>
-      <select class="form-control" data-bind="options: filterOptions, value: selectedFilter, click: filterChange"></select>
+      <select class="form-control" data-bind="options: filterOptions, value: selectedFilter, event: {change: filterChange}"></select>
     </div>
     <div class="panel panel-default full-height">
       <div class="panel-body full-height">
