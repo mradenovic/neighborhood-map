@@ -47,7 +47,7 @@ class HomeViewModel {
       for (let i = 0; i < results.length; i++) {
         this.updateFilter(results[i]);
         this.updatePlaces(results[i]);
-        this.createMarker(results[i]);
+        this.updateMarkers(results[i]);
       }
     }
   }
@@ -63,8 +63,9 @@ class HomeViewModel {
     this.places.push(place);
   }
 
-  createMarker(place) {
-    let placeLoc = place.geometry.location;
+  updateMarkers(place) {
+    let map = this.map;
+    let position = place.geometry.location;
     let icon = {
       url: place.icon,
       size: new google.maps.Size(71, 71),
@@ -74,9 +75,9 @@ class HomeViewModel {
     };
 
     let marker = new google.maps.Marker({
-      map: this.map,
+      map: map,
       icon: icon,
-      position: place.geometry.location
+      position: position
     });
 
     google.maps.event.addListener(marker, 'click', (e) => {
