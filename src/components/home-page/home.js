@@ -39,10 +39,10 @@ class HomeViewModel {
       location: sunnyside,
       radius: 1000,
       keyword: ['food'],
-    }, this.callback.bind(this));
+    }, this.initData.bind(this));
   }
 
-  callback(results, status) {
+  initData(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
       for (let i = 0; i < results.length; i++) {
         this.updateFilter(results[i]);
