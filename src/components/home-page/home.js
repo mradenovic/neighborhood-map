@@ -36,8 +36,17 @@ class HomeViewModel {
       zoom: 14,
     };
 
-    this.map = new google.maps.Map(document.getElementById('google-map'), GOOGLE_MAP_OPTIONS)
-    this.infowindow = new google.maps.InfoWindow();
+    try {
+      this.map = new google.maps.Map(document.getElementById('google-map'), GOOGLE_MAP_OPTIONS)
+      this.infowindow = new google.maps.InfoWindow();
+    }
+    catch(err) {
+      this.alerts.push({
+        message: err,
+        type: 'alert-danger'
+      });
+    }
+
 
     let service = new google.maps.places.PlacesService(this.map);
     service.nearbySearch({
@@ -54,6 +63,11 @@ class HomeViewModel {
         this.updatePlaces(results[i]);
         this.updateMarkers(results[i]);
       }
+    } else {
+      this.alerts.push({
+        message: 'An error occured: ' + status,
+        type: 'alert-danger'
+      });
     }
   }
 
