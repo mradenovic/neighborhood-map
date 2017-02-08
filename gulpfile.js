@@ -21,6 +21,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
             'requireLib',
             'components/nav-bar/nav-bar',
             'components/home-page/home',
+            'components/alerts/alerts',
             'text!components/about-page/about.html'
         ],
         insertRequire: ['app/startup'],
@@ -79,8 +80,9 @@ gulp.task('js', ['js:optimize'], function () {
 gulp.task('css', function () {
     var bowerCss = gulp.src('src/bower_modules/components-bootstrap/css/bootstrap.min.css')
             .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
+        sidebarCss = gulp.src('src/bower_modules/bootstrap-sidebar/dist/css/sidebar.css'),
         appCss = gulp.src('src/css/*.css'),
-        combinedCss = es.concat(bowerCss, appCss).pipe(concat('css.css')),
+        combinedCss = es.concat(bowerCss, sidebarCss, appCss).pipe(concat('css.css')),
         fontFiles = gulp.src('./src/bower_modules/components-bootstrap/fonts/*', { base: './src/bower_modules/components-bootstrap/' });
     return es.concat(combinedCss, fontFiles)
         .pipe(gulp.dest('./dist/'));
