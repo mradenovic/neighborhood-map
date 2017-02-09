@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import GoogleMapsLoader from 'google-maps';
 import homeTemplate from 'text!./home.html';
+import request_config from 'yelp';
 
 class HomeViewModel {
 
@@ -10,7 +11,26 @@ class HomeViewModel {
     this.filterOptions = ko.observableArray(['all']);
     this.selectedFilter = ko.observable();
     this.places = ko.observableArray();
+    this.yelpPlaces = ko.observableArray();
     this.loadGoogleMapsAPI();
+    this.loadYelpPlaces();
+  }
+
+  loadYelpPlaces() {
+    $.ajax(request_config)
+      .done((data, textStatus, jqXHR) => {
+        this.yelpPlaces( data.businesses );
+        this.center = {
+          lat: data.region.center.latitude,
+          lng: data.region.center.longitude
+        };
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        this.alerts.push({
+          message: 'Failed to load Yelp places',
+          type: 'alert-danger'
+        });
+      });
   }
 
   loadGoogleMapsAPI() {
