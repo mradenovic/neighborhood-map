@@ -7,8 +7,8 @@ function cb(data) {
 }
 
 let term = "grocery";
-let location = 'Sunnyside NY';
-let radius = 150;
+let ll = '40.7436618,-73.9264847'
+let radius = 500;
 
 let accessor = {
   consumerSecret: auth.consumerSecret,
@@ -17,7 +17,7 @@ let accessor = {
 
 let parameters = [];
 parameters.push(['term', term]);
-parameters.push(['location', location]);
+parameters.push(['ll', ll]);
 parameters.push(['radius_filter', radius]);
 parameters.push(['callback', 'cb']);
 parameters.push(['oauth_consumer_key', auth.consumerKey]);
