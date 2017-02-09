@@ -11,6 +11,10 @@ var require = {
     "knockout-projections": "bower_modules/knockout-projections/dist/knockout-projections",
     "signals": "bower_modules/js-signals/dist/signals.min",
     "google-maps": "bower_modules/google-maps/lib/Google.min",
+    "oauth": "lib/oauth",
+    "sha1": "lib/sha1",
+    "yelp-api-keys": "lib/yelp-api-keys",
+    "yelp": "lib/yelp",
     "text": "bower_modules/requirejs-text/text"
   },
   shim: {
