@@ -2,10 +2,6 @@ import ko from 'knockout';
 import GoogleMapsLoader from 'google-maps';
 import homeTemplate from 'text!./home.html';
 
-ko.components.register('alerts', {
-  require: 'components/alerts/alerts'
-});
-
 class HomeViewModel {
 
   constructor(route) {

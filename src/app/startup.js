@@ -14,6 +14,10 @@ ko.components.register('home-page', {
   require: 'components/home-page/home'
 });
 
+ko.components.register('alerts', {
+  require: 'components/alerts/alerts'
+});
+
 // ... or for template-only components, you can just point to a .html file directly:
 ko.components.register('about-page', {
   template: {
