@@ -10,9 +10,8 @@ class HomeViewModel {
     this.markers = [];
     this.filterOptions = ko.observableArray(['all']);
     this.selectedFilter = ko.observable();
-    this.places = ko.observableArray();
     this.yelpPlaces = ko.observableArray();
-    this.loadGoogleMapsAPI();
+    this.selectedPlace = ko.observable();
     this.loadYelpPlaces();
   }
 
@@ -24,6 +23,7 @@ class HomeViewModel {
           lat: data.region.center.latitude,
           lng: data.region.center.longitude
         };
+        this.loadGoogleMapsAPI();
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         this.alerts.push({
@@ -42,19 +42,16 @@ class HomeViewModel {
   }
 
   initGoogleMap(google) {
-    let sunnyside = {
-      lat: 40.7436618,
-      lng: -73.9264847
-    };
-
+    let center = this.center;
     let GOOGLE_MAP_OPTIONS = {
-      center: sunnyside,
-      zoom: 14,
+      center: center,
+      zoom: 16,
     };
 
     try {
       this.map = new google.maps.Map(document.getElementById('google-map'), GOOGLE_MAP_OPTIONS)
       this.infowindow = new google.maps.InfoWindow();
+      this.updateData();
     }
     catch(err) {
       this.alerts.push({
@@ -62,51 +59,37 @@ class HomeViewModel {
         type: 'alert-danger'
       });
     }
-
-
-    let service = new google.maps.places.PlacesService(this.map);
-    service.nearbySearch({
-      location: sunnyside,
-      radius: 1000,
-      keyword: ['food'],
-    }, this.initData.bind(this));
   }
 
-  initData(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (let i = 0; i < results.length; i++) {
-        this.updateFilter(results[i]);
-        this.updatePlaces(results[i]);
-        this.updateMarkers(results[i]);
-      }
-    } else {
-      this.alerts.push({
-        message: 'An error occured: ' + status,
-        type: 'alert-danger'
-      });
+  updateData() {
+    let places = this.yelpPlaces();
+    for (let i = 0; i < places.length; i++) {
+      this.updateFilter(places[i]);
+      this.updateMarkers(places[i]);
     }
   }
 
   updateFilter(place) {
-    let type = place.types[0];
-    if (this.filterOptions.indexOf(type) == -1) {
-      this.filterOptions.push(type);
+    for (let i = 0; i < place.categories.length; i++) {
+      let category = place.categories[i][0];
+      if (this.filterOptions.indexOf(category) == -1) {
+        this.filterOptions.push(category);
+      }
     }
-  }
-
-  updatePlaces(place) {
-    this.places.push(place);
   }
 
   updateMarkers(place) {
     let map = this.map;
-    let position = place.geometry.location;
+    let position = {
+      lat: place.location.coordinate.latitude,
+      lng: place.location.coordinate.longitude
+    };
     let icon = {
-      url: place.icon,
-      size: new google.maps.Size(71, 71),
+      url: place.image_url,
+      size: new google.maps.Size(100, 100),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(25, 25)
+      scaledSize: new google.maps.Size(32, 32)
     };
 
     let marker = new google.maps.Marker({
@@ -117,14 +100,15 @@ class HomeViewModel {
 
     google.maps.event.addListener(marker, 'click', (e) => {
       let i = this.markers.indexOf(marker);
-      this.locationClick(this.places()[i], e);
+      this.locationClick(this.yelpPlaces()[i]);
     });
 
     this.markers.push(marker);
   }
 
-  locationClick(place, e) {
-    let i = this.places().indexOf(place);
+  locationClick(place) {
+    this.selectedPlace(place);
+    let i = this.yelpPlaces().indexOf(place);
     let marker = this.markers[i];
 
     marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -132,13 +116,13 @@ class HomeViewModel {
       marker.setAnimation(null)
     }, 3550);
 
-    this.infowindow.setContent(place.name);
+    this.infowindow.setContent(this.selectedPlace().name);
     this.infowindow.open(this.map, this.markers[i]);
   }
 
   filterChange() {
     let markers = this.markers;
-    let places = this.places();
+    let places = this.yelpPlaces();
     for (var i = 0; i < markers.length; i++) {
       let visible = this.placeIsVisible(places[i]);
       let map = visible ? this.map : null;
@@ -148,7 +132,12 @@ class HomeViewModel {
 
   placeIsVisible(place) {
     let selectedFilter = this.selectedFilter();
-    let visible = (selectedFilter == place.types[0]) || (selectedFilter == 'all');
+    let visible = false;
+    for (let i = 0; i < place.categories.length ; i++) {
+      let category = place.categories[i][0];
+      visible = (selectedFilter == category) || (selectedFilter == 'all');
+      if ( visible ) { break; }
+    }
     return visible;
   }
 }

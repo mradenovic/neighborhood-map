@@ -1,11 +1,11 @@
 <div class="row full-height">
   <div class="col-xs-7 col-sm-3 col-md-3 sidebar sidebar-left sidebar-animate sidebar-md-show">
     <div class="row">
-      <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: places">
+      <ul class="nav navbar-stacked navbar-inverse" data-bind="foreach: yelpPlaces">
         <li data-toggle="sidebar" data-target=".sidebar-left" data-bind="visible: $parent.placeIsVisible($data), click: function (place, event) {$parent.locationClick(place, event)}">
           <a href="#">
             <div data-bind="text: name"></div>
-            <small data-bind="text: vicinity"></small>
+            <small data-bind="text: location.display_address"></small>
           </a>
         </li>
       </ul>
