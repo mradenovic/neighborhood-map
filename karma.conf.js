@@ -40,6 +40,7 @@ module.exports = function(config) {
         '**/require.config.js': ['requireglobal'],
         'src/app/router.js': ['babel'],
         'src/app/startup.js': ['babel'],
+        'src/lib/**/*.js': ['babel'],
         'src/components/**/*.js': ['babel']
     },
 
