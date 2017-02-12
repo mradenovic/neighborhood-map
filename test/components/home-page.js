@@ -1,15 +1,20 @@
 define(['components/home-page/home'], function(homePage) {
   var HomePageViewModel = homePage.viewModel;
+  var instance;
 
   describe('Home page view model', function() {
 
-    it('should supply a friendly message which changes when acted upon', function() {
-      var instance = new HomePageViewModel();
-      expect(instance.message()).toContain('Welcome to ');
+    beforeEach(function() {
+      spyOn(HomePageViewModel.prototype, 'loadYelpPlaces').and.callThrough();
+      instance = new HomePageViewModel();
+    });
 
-      // See the message change
-      instance.doSomething();
-      expect(instance.message()).toContain('You invoked doSomething()');
+    it('should call loadYelpPlaces', function() {
+      expect(instance.loadYelpPlaces).toHaveBeenCalled();
+    });
+
+    it('filterOptions array should eqal ["all"]', function() {
+      expect(instance.filterOptions()).toEqual(['all']);
     });
 
   });
