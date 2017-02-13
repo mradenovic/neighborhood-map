@@ -1,6 +1,7 @@
 import ko from 'knockout';
 import GoogleMapsLoader from 'google-maps';
 import homeTemplate from 'text!./home.html';
+import infoWindowTemplate from 'text!../info-window/info-window.html';
 import request_config from 'yelp';
 
 class HomeViewModel {
@@ -122,21 +123,7 @@ class HomeViewModel {
   }
 
   getInfoContent(place) {
-    let content = `
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">${place.name}</h3>
-      </div>
-      ${place.location.display_address}
-      <div class="panel-body">
-      <img class="img-responsive img-rounded img-thumbnail" src="${place.image_url}" alt="${place.name}">
-      ${place.snippet_text}
-      <a href="${place.url}">
-        view on Yelp
-      </a>
-      </div>
-    </div>
-    `;
+    let content = eval(infoWindowTemplate);
     return content;
   }
 

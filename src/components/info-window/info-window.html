@@ -1,0 +1,15 @@
+`
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">${place.name}</h3>
+  </div>
+  ${place.location.display_address}
+  <div class="panel-body">
+  <img class="img-responsive img-rounded img-thumbnail" src="${place.image_url}" alt="${place.name}">
+  ${place.snippet_text}
+  <a href="${place.url}">
+    view on Yelp
+  </a>
+  </div>
+</div>
+`
