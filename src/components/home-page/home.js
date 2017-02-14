@@ -88,14 +88,16 @@ class HomeViewModel {
 
     google.maps.event.addListener(marker, 'click', (e) => {
       let i = this.markers.indexOf(marker);
-      this.locationClick(this.yelpPlaces()[i]);
+      this.locationClick(i);
     });
 
     this.markers.push(marker);
   }
 
-  locationClick(place) {
-    let i = this.yelpPlaces().indexOf(place);
+  locationClick(i) {
+    let map = this.map;
+    let infoWindow = this.infowindow;
+    let place = this.yelpPlaces()[i]
     let marker = this.markers[i];
 
     marker.setAnimation(google.maps.Animation.BOUNCE);
@@ -104,8 +106,8 @@ class HomeViewModel {
     }, 3550);
 
     let content = this.getInfoContent(place);
-    this.infowindow.setContent(content);
-    this.infowindow.open(this.map, this.markers[i]);
+    infoWindow.setContent(content);
+    infoWindow.open(map, marker);
   }
 
   filterChange() {
