@@ -19,10 +19,7 @@ class HomeViewModel {
     $.ajax(request_config)
       .done((data, textStatus, jqXHR) => {
         this.yelpPlaces( data.businesses );
-        this.center = {
-          lat: data.region.center.latitude,
-          lng: data.region.center.longitude
-        };
+        this.mapCenter = this.getLatLng(data.region.center);
         this.loadGoogleMapsAPI();
       })
       .fail((jqXHR, textStatus, errorThrown) => {
@@ -42,7 +39,7 @@ class HomeViewModel {
   }
 
   initGoogleMap(google) {
-    let center = this.center;
+    let center = this.mapCenter;
     let GOOGLE_MAP_OPTIONS = {
       center: center,
       zoom: 16,
@@ -80,17 +77,8 @@ class HomeViewModel {
 
   updateMarkers(place) {
     let map = this.map;
-    let position = {
-      lat: place.location.coordinate.latitude,
-      lng: place.location.coordinate.longitude
-    };
-    let icon = {
-      url: place.image_url,
-      size: new google.maps.Size(100, 100),
-      origin: new google.maps.Point(0, 0),
-      anchor: new google.maps.Point(17, 34),
-      scaledSize: new google.maps.Size(32, 32)
-    };
+    let position = this.getLatLng(place.location.coordinate);
+    let icon = this.getMarkerIcon(place.image_url);
 
     let marker = new google.maps.Marker({
       map: map,
@@ -120,11 +108,6 @@ class HomeViewModel {
     this.infowindow.open(this.map, this.markers[i]);
   }
 
-  getInfoContent(place) {
-    let content = eval(infoWindowTemplate);
-    return content;
-  }
-
   filterChange() {
     let markers = this.markers;
     let places = this.yelpPlaces();
@@ -145,6 +128,31 @@ class HomeViewModel {
     }
     return visible;
   }
+
+  getInfoContent(place) {
+    let content = eval(infoWindowTemplate);
+    return content;
+  }
+
+  getMarkerIcon(imageUrl) {
+    let icon = {
+      url: imageUrl,
+      size: new google.maps.Size(100, 100),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(32, 32)
+    };
+    return icon;
+  }
+
+  getLatLng(location) {
+    let latLng =  {
+      lat: location.latitude,
+      lng: location.longitude
+    };
+    return latLng;
+  }
+
 }
 
 export default {
