@@ -12,7 +12,6 @@ class HomeViewModel {
     this.filterOptions = ko.observableArray(['all']);
     this.selectedFilter = ko.observable();
     this.yelpPlaces = ko.observableArray();
-    this.selectedPlace = ko.observable();
     this.loadYelpPlaces();
   }
 
@@ -108,7 +107,6 @@ class HomeViewModel {
   }
 
   locationClick(place) {
-    this.selectedPlace(place);
     let i = this.yelpPlaces().indexOf(place);
     let marker = this.markers[i];
 
