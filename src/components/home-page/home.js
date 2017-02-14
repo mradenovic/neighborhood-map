@@ -86,11 +86,7 @@ class HomeViewModel {
       position: position
     });
 
-    google.maps.event.addListener(marker, 'click', (e) => {
-      let i = this.markers.indexOf(marker);
-      this.locationClick(i);
-    });
-
+    this.addMarkerListener(marker);
     this.markers.push(marker);
   }
 
@@ -100,10 +96,7 @@ class HomeViewModel {
     let place = this.yelpPlaces()[i]
     let marker = this.markers[i];
 
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(() => {
-      marker.setAnimation(null)
-    }, 3550);
+    this.setMarkerAnimation(marker);
 
     let content = this.getInfoContent(place);
     infoWindow.setContent(content);
@@ -145,6 +138,20 @@ class HomeViewModel {
       scaledSize: new google.maps.Size(32, 32)
     };
     return icon;
+  }
+
+  setMarkerAnimation(marker) {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(() => {
+      marker.setAnimation(null)
+    }, 3550);
+  }
+
+  addMarkerListener(marker) {
+    google.maps.event.addListener(marker, 'click', (e) => {
+      let i = this.markers.indexOf(marker);
+      this.locationClick(i);
+    });
   }
 
   getLatLng(location) {
